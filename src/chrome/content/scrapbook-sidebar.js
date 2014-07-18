@@ -14,12 +14,15 @@ var ExportToWiz = {
           return;
 
         var id = ScrapBookData.getProperty(aRes, "id"),
+          type = ScrapBookData.getProperty(aRes, "type"),
           title = ScrapBookData.getProperty(aRes, "title"),
           url = ScrapBookData.getProperty(aRes, "source");
 
+        // 当 type 为 site 时，有多个 html，会有问题
+
         var aFolder = ScrapBookUtils.getContentDir(id),
           indexPath = aFolder.path + '\\index.html',
-          preUrl = url.replace(/[^\/]+\/?$/, '');
+          preUrl = url.replace(/[^\/]*$/, '');
 
         var contentConfig = "[Common]\r\nURL=" + url +
               "\r\nTitle=" + title +
@@ -45,6 +48,7 @@ var ExportToWiz = {
         contentConfig += "\r\nCount=" + resourceFilesIndex;
 
         // console.log(contentConfig);
+        console.log('111', type)
         
         this.launchWiz(contentConfig);
     },
