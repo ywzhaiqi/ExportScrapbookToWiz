@@ -6,6 +6,8 @@
  - 需要有 WizBrother Wiz Plugin 2.0 扩展。
  - 默认忽略 .ttf 结尾的字体文件。在某些站点 Scrapbook 会保存字体，会让导出到 Wiz 的文件偏大。
 
+安装地址：https://github.com/ywzhaiqi/ExportScrapbookToWiz/releases
+
 ![menu.png](menu.png)
 
 ![export.png](export.png)
