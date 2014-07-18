@@ -1,0 +1,4 @@
+content   exportscrapbooktowiz                 chrome/content/
+skin      exportscrapbooktowiz   classic/1.0   chrome/skin/
+locale    exportscrapbooktowiz   en-US         chrome/locale/en-US/
+overlay	 chrome://scrapbook/content/tree.xul	chrome://exportscrapbooktowiz/content/scrapbook-sidebar.xul
