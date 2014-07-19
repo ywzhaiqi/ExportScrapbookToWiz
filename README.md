@@ -14,7 +14,7 @@
 ### 地址及镜像
 
  - [ExportScrapbookToWiz :: Firefox 附加组件](https://addons.mozilla.org/zh-cn/firefox/addon/exportscrapbooktowiz/)，审核失败，链接已失效。由于 Wiz 并未将 2.0 扩展上传 AMO，故本扩展无法测试通过。
- - [github](https://github.com/ywzhaiqi/ExportScrapbookToWiz)，[安装包地址](https://github.com/ywzhaiqi/ExportScrapbookToWiz/releases)
+ - [github](https://github.com/ywzhaiqi/ExportScrapbookToWiz)，~~[安装包地址](https://github.com/ywzhaiqi/ExportScrapbookToWiz/releases)~~ *由于上传的为亚马逊服务器，国内的可能无法正常上传*
  - [卡饭论坛](http://bbs.kafan.cn/thread-1756913-1-1.html)
  - [Mozilla 社区](http://g.mozest.com/thread-44774-1-1)
 
