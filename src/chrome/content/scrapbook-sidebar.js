@@ -106,5 +106,34 @@ ExportScrapbookToWiz = {
     var cmdLineExe = [dllFileName, functionName, params, firefoxType];
 
     wiz_km_runExeFile(exeFile, cmdLineExe, false);
-  }
+  },
+
+  onload: function() {
+    var DATA = [
+      ['sbPopupOpen', 'o'],
+      ['sbPopupOpenNewTab', 't'],
+      ['sbPopupOpenSource', 's'],
+
+      ['sbPopupTools', 'e'],
+      ['sbPopupShowFiles', 'f'],
+      ['sbPopupSend', 'm'],
+      ['sbPopupExport', 'e'],
+
+      ['sbPopupRemove', 'd'],
+      ['sbPopupNewFolder', 'f'],
+      ['sbPopupNewNote', 'n'],
+      ['sbPopupProperty', 'p'],
+    ];
+
+    DATA.forEach(function(info){
+      var menuitem = document.getElementById(info[0]);
+      if (menuitem) {
+        menuitem.setAttribute('accesskey', info[1]);
+      }
+    });
+  },
 };
+
+window.addEventListener('load', function(){
+  ExportScrapbookToWiz.onload();
+}, false);

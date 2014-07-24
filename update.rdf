@@ -1,17 +1,18 @@
 <?xml version="1.0" ?>
 <RDF:RDF xmlns:RDF="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-	<RDF:Description RDF:about="urn:mozilla:extension:exportscrapbooktowiz@ywzhaiqi">
+	<RDF:Description RDF:about="urn:mozilla:extension:userChromeJS@mozdev.org">
 		<em:updates xmlns:em="http://www.mozilla.org/2004/em-rdf#">
 			<RDF:Seq>
 				<RDF:li>
 					<RDF:Description>
-						<em:version>1.3</em:version>
+						<em:version>1.4</em:version>
 						<em:targetApplication>
 							<RDF:Description>
 								<em:id>exportscrapbooktowiz@ywzhaiqi</em:id>
 								<em:minVersion>20.0</em:minVersion>
 								<em:maxVersion>34.0</em:maxVersion>
 								<em:updateLink>https://raw.githubusercontent.com/ywzhaiqi/ExportScrapbookToWiz/master/ExportScrapbookToWiz.xpi</em:updateLink>
+								<em:updateInfoURL>https://raw.githubusercontent.com/ywzhaiqi/ExportScrapbookToWiz/master/ExportScrapbookToWiz.xhtml</em:updateInfoURL>
 							</RDF:Description>
 						</em:targetApplication>
 					</RDF:Description>

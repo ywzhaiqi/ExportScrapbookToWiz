@@ -5,7 +5,8 @@
 
  - 需要有 **WizBrother Wiz Plugin 2.0 扩展**（Wiz 客户端自带的 wiz.xpi），[26 楼](http://bbs.kafan.cn/forum.php?mod=redirect&goto=findpost&ptid=1756913&pid=32096428) 有个上传文件。
  - 默认忽略 .ttf 结尾的字体文件。在某些站点 Scrapbook 会保存字体，会让导出到 Wiz 的文件偏大。
- - 如果要自动更新，需要保证 github 网络的顺畅。
+ - **给 Scrapbook 的右键菜单增加了 accesskey**
+ - ~~如果要自动更新，需要保证 github 网络的顺畅。~~
 
 还有一种方法
 

@@ -6,6 +6,8 @@
   <script src="scrapbook-sidebar.js"/>
 
   <menupopup id="sbPopupToolsMenu">
-    <menuitem id="sbPopupExportToWiz" label="&sidebar.exportToWiz;" oncommand="ExportScrapbookToWiz.export();" />
+    <menuitem id="sbPopupExportToWiz" label="&sidebar.exportToWiz;"
+        accesskey="w"
+        oncommand="ExportScrapbookToWiz.export();" />
   </menupopup>
 </overlay>
