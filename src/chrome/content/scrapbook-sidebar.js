@@ -1,11 +1,8 @@
 var { classes: Cc, interfaces: Ci, utils: Cu } = Components;
 Cu.import("resource://gre/modules/devtools/Console.jsm")
 
-if (typeof ExportScrapbookToWiz === 'undefined') {
-  var ExportScrapbookToWiz = {};
-}
 
-ExportScrapbookToWiz = {
+var ExportScrapbookToWiz = {
   debug: false,
 
   mainWindow: window.QueryInterface(Ci.nsIInterfaceRequestor)
@@ -71,11 +68,11 @@ ExportScrapbookToWiz = {
     this.launchWiz(contentConfig);
   },
   launchWiz: function(contentConfig) {
-    var wiz_km_writeFileWithCharset = this.mainWindow.wiz_km_writeFileWithCharset,
-      wiz_km_getWizAppPath = this.mainWindow.wiz_km_getWizAppPath,
-      wiz_km_unicodeToBytes = this.mainWindow.wiz_km_unicodeToBytes,
-      wiz_km_base64Encode = this.mainWindow.wiz_km_base64Encode,
-      wiz_km_runExeFile = this.mainWindow.wiz_km_runExeFile;
+    var wiz_km_writeFileWithCharset = this.wiz_km_writeFileWithCharset,
+      wizAppPath = this.getWizAppPath(),
+      wiz_km_unicodeToBytes = this.wiz_km_unicodeToBytes,
+      wiz_km_base64Encode = this.wiz_km_base64Encode,
+      wiz_km_runExeFile = this.wiz_km_runExeFile;
 
     var tmpDir = Cc["@mozilla.org/file/directory_service;1"]
       .getService(Ci.nsIProperties)
@@ -86,12 +83,12 @@ ExportScrapbookToWiz = {
 
     wiz_km_writeFileWithCharset(fileNameConfig, contentConfig, "utf-8");
 
-    var fileNameExe = wiz_km_getWizAppPath() + "Wiz.exe";
+    var fileNameExe = wizAppPath + "Wiz.exe";
 
-    var exeFile = Cc["@mozilla.org/file/local;1"].createInstance(Ci.nsILocalFile);
+    var exeFile = Cc["@mozilla.org/file/local;1"].createInstance(Ci.nsIFile);
     exeFile.initWithPath(fileNameExe);
 
-    var dllFileName = wiz_km_getWizAppPath() + "NPWizWebCapture.dll";
+    var dllFileName = wizAppPath + "NPWizWebCapture.dll";
     var functionName = "WizKMResourceToDocument";
 
     var params = fileNameConfig.path;
@@ -132,6 +129,88 @@ ExportScrapbookToWiz = {
       }
     });
   },
+
+  // wiz 相关 函数
+  getWizAppPath: function() {
+    if (this.mainWindow.Wiz) {  // 官方市场的版本
+      return this.mainWindow.Wiz.nativeManager.mozillaCtrl.getAppPath()
+    } else if (this.mainWindow.wiz_km_getWizAppPath) {  // 很早前的版本
+      return this.mainWindow.wiz_km_getWizAppPath();
+    }
+  },
+  wiz_km_writeFileWithCharset: function(file, content, charset) {
+    try {
+      if (file.exists() && file.isFile()) {
+        file.remove(false);
+      }
+
+      const cc = Components.classes;
+      const ci = Components.interfaces;
+      const unicodeConverter = cc["@mozilla.org/intl/scriptableunicodeconverter"].createInstance(ci.nsIScriptableUnicodeConverter);
+      unicodeConverter.charset = charset;
+      content = unicodeConverter.ConvertFromUnicode(content);
+      const os = cc["@mozilla.org/network/file-output-stream;1"].createInstance(ci.nsIFileOutputStream);
+      os.init(file, 0x02 | 0x08 | 0x20, -1, 0);
+      os.write(content, content.length);
+      os.close();
+    } catch (err) {
+      console.error(err);
+    }
+  },
+  wiz_km_unicodeToBytes: function(content, charset) {
+    try {
+      const unicodeConverter = Cc["@mozilla.org/intl/scriptableunicodeconverter"].createInstance(Ci.nsIScriptableUnicodeConverter);
+      unicodeConverter.charset = charset ? charset : 'utf-8';
+      content = unicodeConverter.ConvertFromUnicode(content);
+      //
+      return content;
+    } catch (err) {
+      throw err;
+    }
+  },
+  wiz_km_base64EncodeChars: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/",
+  wiz_km_base64Encode: function(str) {
+    var wiz_km_base64EncodeChars = ExportScrapbookToWiz.wiz_km_base64EncodeChars;
+
+    var out, i, len;
+    var c1, c2, c3;
+    len = str.length;
+    i = 0;
+    out = "";
+    while (i < len) {
+      c1 = str.charCodeAt(i++) & 0xff;
+      if (i == len) {
+        out += wiz_km_base64EncodeChars.charAt(c1 >> 2);
+        out += wiz_km_base64EncodeChars.charAt((c1 & 0x3) << 4);
+        out += "==";
+        break;
+      }
+      c2 = str.charCodeAt(i++);
+      if (i == len) {
+        out += wiz_km_base64EncodeChars.charAt(c1 >> 2);
+        out += wiz_km_base64EncodeChars.charAt(((c1 & 0x3) << 4) | ((c2 & 0xF0) >> 4));
+        out += wiz_km_base64EncodeChars.charAt((c2 & 0xF) << 2);
+        out += "=";
+        break;
+      }
+      c3 = str.charCodeAt(i++);
+      out += wiz_km_base64EncodeChars.charAt(c1 >> 2);
+      out += wiz_km_base64EncodeChars.charAt(((c1 & 0x3) << 4) | ((c2 & 0xF0) >> 4));
+      out += wiz_km_base64EncodeChars.charAt(((c2 & 0xF) << 2) | ((c3 & 0xC0) >> 6));
+      out += wiz_km_base64EncodeChars.charAt(c3 & 0x3F);
+    }
+    return out;
+  },
+  wiz_km_runExeFile: function(fileExe, cmdline, block) {
+    try {
+      var proc = Cc['@mozilla.org/process/util;1'].createInstance(Ci.nsIProcess);
+      proc.init(fileExe);
+      proc.run(block, cmdline, cmdline.length);
+    } catch (err) {
+      throw err;
+    }
+  }
+
 };
 
 window.addEventListener('load', function(){

@@ -4,7 +4,7 @@
     <Description about="urn:mozilla:install-manifest">
         <em:type>2</em:type> <!-- 2 : Extension -->
         <em:id>exportscrapbooktowiz@ywzhaiqi</em:id>
-        <em:version>1.4</em:version>
+        <em:version>1.5</em:version>
         <em:name>ExportScrapbookToWiz</em:name>
         <em:description>导出 Scrapbook 条目到 Wiz</em:description>
         <em:creator>ywzhaiqi</em:creator>
@@ -13,13 +13,13 @@
         <em:optionsType>2</em:optionsType>
 
         <em:homepageURL>https://github.com/ywzhaiqi/ExportScrapbookToWiz</em:homepageURL>
-        <em:updateURL>https://raw.githubusercontent.com/ywzhaiqi/ExportScrapbookToWiz/master/update.rdf</em:updateURL>
+        <!-- <em:updateURL>https://raw.githubusercontent.com/ywzhaiqi/ExportScrapbookToWiz/master/update.rdf</em:updateURL> -->
 
         <em:targetApplication>
             <Description>
                 <!-- Firefox -->
                 <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
-                <em:minVersion>20.0</em:minVersion>
+                <em:minVersion>4.0b1</em:minVersion>
                 <em:maxVersion>34.0</em:maxVersion>
             </Description>
         </em:targetApplication>
