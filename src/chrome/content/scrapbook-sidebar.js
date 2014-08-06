@@ -1,6 +1,10 @@
 var { classes: Cc, interfaces: Ci, utils: Cu } = Components;
-Cu.import("resource://gre/modules/devtools/Console.jsm")
+Cu.import("resource://gre/modules/devtools/Console.jsm");
 
+function makeURI(aURL, aOriginCharset, aBaseURI) {
+    var ioService = Cc["@mozilla.org/network/io-service;1"].getService(Ci.nsIIOService);
+    return ioService.newURI(aURL, aOriginCharset, aBaseURI);
+}
 
 var ExportScrapbookToWiz = {
   debug: false,
@@ -34,8 +38,14 @@ var ExportScrapbookToWiz = {
     // 当 type 为 site 时，有多个 html，会有问题
 
     var aFolder = ScrapBookUtils.getContentDir(id),
-      indexPath = aFolder.path + '\\index.html',
-      preUrl = url.replace(/[^\/]*$/, '');
+      indexPath = aFolder.path + '\\index.html';
+
+    // 诸如这个网址 https://webcache.googleusercontent.com/search?q=cache:yM_uF1OboPoJ:https://dominustemporis.com/2014/05/dnscrypt-on-windows-update/+&cd=1&hl=en&ct=clnk
+    if (/https?:\/\/.*https?:\/\//i.test(url)) {
+      var preUrl = makeURI(url).prePath + '/';
+    } else {
+      var preUrl = url.replace(/[^\/]*$/, '');
+    }
 
     var contentConfig = "[Common]\r\nURL=" + url +
       "\r\nTitle=" + title +

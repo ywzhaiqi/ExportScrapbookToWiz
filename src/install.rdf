@@ -4,7 +4,7 @@
     <Description about="urn:mozilla:install-manifest">
         <em:type>2</em:type> <!-- 2 : Extension -->
         <em:id>exportscrapbooktowiz@ywzhaiqi</em:id>
-        <em:version>1.5</em:version>
+        <em:version>1.6</em:version>
         <em:name>ExportScrapbookToWiz</em:name>
         <em:description>导出 Scrapbook 条目到 Wiz</em:description>
         <em:creator>ywzhaiqi</em:creator>
