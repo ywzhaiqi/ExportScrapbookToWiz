@@ -35,6 +35,8 @@ var ExportScrapbookToWiz = {
       title = ScrapBookData.getProperty(aRes, "title"),
       url = ScrapBookData.getProperty(aRes, "source");
 
+    url = decodeURIComponent(url);
+
     // 当 type 为 site 时，有多个 html，会有问题
 
     var aFolder = ScrapBookUtils.getContentDir(id),
@@ -83,6 +85,11 @@ var ExportScrapbookToWiz = {
       wiz_km_unicodeToBytes = this.wiz_km_unicodeToBytes,
       wiz_km_base64Encode = this.wiz_km_base64Encode,
       wiz_km_runExeFile = this.wiz_km_runExeFile;
+
+    if (!wizAppPath) {
+      alert('Wiz 扩展不存在');
+      return;
+    }
 
     var tmpDir = Cc["@mozilla.org/file/directory_service;1"]
       .getService(Ci.nsIProperties)
